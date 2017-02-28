@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title></title>
+	</head>
+	<!--ionic.bundle.js是集合了 ionic.js, angular.js, angular-animate.js,
+		angular-sanitize.js, angular-ui-router.js,
+		and ionic-angular.js-->
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css" />
+	<!--
+		1.引入ionic.bundle.js，css/ionic.css
+		2.定义一个主模块，引入模块名ionic
+	-->
+
+	<body>
+		<!--如果我们相中哪一个头部，直接复制粘贴-->
+		<div ng-controller="indexCtrl">
+			<ion-header-bar align-title="right" class="bar-stable">
+				<button class="button icon-left ion-chevron-left button-clear button-dark">Back</button>
+				<h1 class="title">Title!</h1>
+				<button class="button button-light" ng-click="showDelete()">button-light</button>
+			</ion-header-bar>
+			<ion-content>
+				<ion-refresher pulling-text="Hello" on-refresh="getData()" pulling-icon="ion-ios-loop" refreshing-icon="ion-calculator" refreshing-text="world">
+				</ion-refresher>
+
+				<ion-list class="list" show-reorder="true" can-swipe="true">
+					<ion-item class="item" ng-repeat="n in news">{{n.text}}
+						<ion-option-button class="button-positive">分享</ion-option-button>
+						<ion-option-button class="button-assertive" ng-click="deleteNew(n.id)">删除</ion-option-button>
+						<ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)">
+						</ion-reorder>
+					</ion-item>
+				</ion-list>
+
+			</ion-content>
+		</div>
+	</body>
+	<script>
+		//也是用angular的语法，定义一个主模块，引入ionic模块
+		var app = angular.module('ionicApp', ['ionic']);
+		app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
+			$scope.isDelete = true;
+			$scope.showDelete = function() {
+				$scope.isDelete = !$scope.isDelete
+			}
+			$scope.name = 'ionic';
+			$scope.title = '标题';
+			$scope.news = [];
+			$scope.getData = function() {
+				$http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id', {
+					params: {
+						channel_id:1
+					}
+				}).success(function(data) {
+					console.log(data)
+					$scope.news = $scope.news.concat(data.news_list);
+					$scope.$broadcast('scroll.refreshComplete');
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				})
+			}
+			$scope.getData();
+			$scope.deleteNew = function(id) {
+				console.log(id)
+				$http.get('http://10.16.155.28:81/news/php/index.php/news_api/delete_news', {
+					params: {
+						id: id
+					}
+				}).success(function() {
+					$http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id', {
+						params: {
+							channel_id: 4
+						}
+					}).success(function(data) {
+						console.log(data)
+						$scope.news = data.news_list;
+						$scope.$broadcast('scroll.refreshComplete');
+						$scope.$broadcast('scroll.infiniteScrollComplete');
+					})
+				})
+			}
+		}])
+	</script>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title></title>
+	</head>
+	<!--ionic.bundle.js是集合了 ionic.js, angular.js, angular-animate.js,
+		angular-sanitize.js, angular-ui-router.js,
+		and ionic-angular.js-->
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css" />
+	<!--
+		1.引入ionic.bundle.js，css/ionic.css
+		2.定义一个主模块，引入模块名ionic
+	-->
+
+	<body>
+		<!--如果我们相中哪一个头部，直接复制粘贴-->
+		<div ng-controller="indexCtrl">
+			<ion-header-bar align-title="right" class="bar-stable">
+				<button class="button icon-left ion-chevron-left button-clear button-dark">Back</button>
+				<h1 class="title">Title!</h1>
+				<button class="button button-light">button-light</button>
+			</ion-header-bar>
+			<ion-content scroll="true" padding="true" has-bouncing="false">
+				<p>test</p>
+			</ion-content>
+		</div>
+	</body>
+	<script>
+		//也是用angular的语法，定义一个主模块，引入ionic模块
+		var app = angular.module('ionicApp', ['ionic']);
+		app.controller('indexCtrl', ['$scope', function($scope) {
+			$scope.name = 'ionic';
+			$scope.title = '标题'
+		}])
+	</script>
+
+</html>

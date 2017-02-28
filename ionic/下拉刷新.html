@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title></title>
+	</head>
+	<!--ionic.bundle.js是集合了 ionic.js, angular.js, angular-animate.js,
+		angular-sanitize.js, angular-ui-router.js,
+		and ionic-angular.js-->
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css" />
+	<!--
+		1.引入ionic.bundle.js，css/ionic.css
+		2.定义一个主模块，引入模块名ionic
+	-->
+
+	<body>
+		<!--如果我们相中哪一个头部，直接复制粘贴-->
+		<div ng-controller="indexCtrl">
+			<ion-header-bar align-title="right" class="bar-stable">
+				<button class="button icon-left ion-chevron-left button-clear button-dark">Back</button>
+				<h1 class="title">Title!</h1>
+				<button class="button button-light">button-light</button>
+			</ion-header-bar>
+			<ion-content padding="true">
+				<!--下拉刷新-->
+				<ion-refresher pulling-text="Hello" on-refresh="getData()" pulling-icon="ion-ios-loop" refreshing-icon="ion-calculator" refreshing-text="world">
+				</ion-refresher>
+				
+				<div class="list card" ng-repeat="new in news">
+					<div class="item item-avatar">
+						<img ng-src="{{new.image}}">
+						<h2>{{new.title}}</h2>
+						<p>{{new.text}}</p>
+					</div>
+
+					<div class="item item-body">
+						<img class="full-image" style="height:20%; width:100%" ng-src="{{new.image}}">
+						<p>
+							{{new.text}}
+						</p>
+						<p>
+							<a href="#" class="subdued">1 喜欢</a>
+							<a href="#" class="subdued">5 评论</a>
+						</p>
+					</div>
+
+					<div class="item tabs tabs-secondary tabs-icon-left">
+						<a class="tab-item" href="#">
+							<i class="icon ion-thumbsup"></i> 喜欢
+						</a>
+						<a class="tab-item" href="#">
+							<i class="icon ion-chatbox"></i> 评论
+						</a>
+						<a class="tab-item" href="#">
+							<i class="icon ion-share"></i> 分享
+						</a>
+					</div>
+
+				</div>
+				<!--滚动到底的时候触发-->
+				<ion-infinite-scroll icon="ion-checkmark-circled" on-infinite="getData()" distance="1%">
+				</ion-infinite-scroll>
+			</ion-content>
+		</div>
+	</body>
+	<script>
+		//也是用angular的语法，定义一个主模块，引入ionic模块
+		var app = angular.module('ionicApp', ['ionic']);
+		app.controller('indexCtrl', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+			$scope.name = 'ionic';
+			$scope.title = '标题';
+			$scope.news = [];
+			$scope.getData = function() {
+				$http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id', {
+					params: {
+						channel_id: 6
+					}
+				}).success(function(data) {
+					console.log(data)
+					$scope.news = $scope.news.concat(data.news_list);
+					$scope.$broadcast('scroll.refreshComplete');
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				})
+			}
+		}])
+	</script>
+
+</html>

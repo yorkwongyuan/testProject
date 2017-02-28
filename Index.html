@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title></title>
+	</head>
+	<!--ionic.bundle.js是集合了 ionic.js, angular.js, angular-animate.js,
+		angular-sanitize.js, angular-ui-router.js,
+		and ionic-angular.js-->
+	<script src="js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="css/ionic.css" />
+	<!--
+		1.引入ionic.bundle.js，css/ionic.css
+		2.定义一个主模块，引入模块名ionic
+	-->
+
+	<body>
+		<!--如果我们相中哪一个头部，直接复制粘贴-->
+		<div ng-controller="indexCtrl">
+			<!--
+				更改标题颜色的类名，来自于文档，bar-dark,bar-royal
+			-->
+			<div class="bar bar-header bar-royal">
+				<button class="button button-outline icon-right ion-navicon button-balanced"></button>
+				<h1 class="title">bar-dark</h1>
+				<button class="button button-icon icon ion-settings"></button>
+			</div>
+			<!--<div class="bar bar-subheader bar-royal">
+				<h2 class="title">Sub Header（副标题）</h2>
+			</div>-->
+			<div class="content has-header ionic-pseudo">
+				<div class="row">
+					<div class="col-10">.col</div>
+					<div class="col-25">.col</div>
+					<div class="col">.col</div>
+				</div>
+				<div class="list">
+
+					<div class="item item-input item-select">
+						<div class="input-label">
+							Lightsaber
+						</div>
+						<select>
+							<option>Blue</option>
+							<option selected="">Green</option>
+							<option>Red</option>
+						</select>
+					</div>
+
+					<div class="item item-input item-select">
+						<div class="input-label">
+							Fighter
+						</div>
+						<select>
+							<option>ARC-170</option>
+							<option>A-wing</option>
+							<option>Delta-7</option>
+							<option>Naboo N-1</option>
+							<option>TIE</option>
+							<option selected="">X-wing</option>
+							<option>Y-wing</option>
+						</select>
+					</div>
+
+					<div class="item item-input item-select">
+						<div class="input-label">
+							Droid
+						</div>
+						<select>
+							<option>2-1B</option>
+							<option>B1</option>
+							<option>C-3PO</option>
+							<option>IG-88</option>
+							<option>IT-O</option>
+							<option selected="">R2-D2</option>
+						</select>
+					</div>
+
+					<div class="item item-input item-select">
+						<div class="input-label">
+							Planet
+						</div>
+						<select>
+							<option>Alderaan</option>
+							<option selected="">Dagobah</option>
+							<option>Felucia</option>
+							<option>Geonosis </option>
+							<option>Hoth</option>
+							<option>Kamino</option>
+							<option>Mygeeto</option>
+							<option>Naboo</option>
+							<option>Tataouine</option>
+							<option>Utapau</option>
+							<option>Yavin</option>
+						</select>
+					</div>
+
+				</div>
+			</div>
+			<div class="tabs">
+				<a class="tab-item" href="#">
+					主页
+				</a>
+				<a class="tab-item" href="#">
+					收藏
+				</a>
+				<a class="tab-item" href="#">
+					设置
+				</a>
+			</div>
+			<!--<div class="bar bar-footer bar-royal">
+				<button class="button button-light">button-light</button>
+				<h1 class="title">bar-dark</h1>
+				<button class="button button-light">button-light</button>
+			</div>-->
+		</div>
+	</body>
+	<script>
+		//也是用angular的语法，定义一个主模块，引入ionic模块
+		var app = angular.module('ionicApp', ['ionic']);
+		app.controller('indexCtrl', ['$scope', function($scope) {
+			$scope.name = 'ionic';
+			$scope.title = '标题'
+		}])
+	</script>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="moduleA">
+<head>
+	<meta charset="UTF-8">
+	<title>导航3</title>
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css">
+
+</head>
+<body ng-controller="indexA">
+	<ion-header-bar align-title="right" class="bar-stable">
+		<button class='button icon-left ion-chevron-left button-clear button-dark'>Back</button>
+		<button class="button button-light" ng-click="showDelete()">showDelete</button>
+	</ion-header-bar>
+	<ion-content>
+		<ion-refresher pulling-text="pulling-text" pulling-icon="ion-ios-loop" refreshing-text="refreshing" refreshing-icon='ion-calculator' on-refresh=>
+			
+		</ion-refresher>
+
+		<ion-list class="list" show-reorder="true" can-swipe="true">
+			<ion-item class="item" ng-repeat="n in news">
+				{{n.text}}
+				<ion-option-button>
+					分享
+				</ion-option-button>
+				<ion-option-button>
+					删除
+				</ion-option-button>
+				<ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)">
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</body>
+	<script>
+		var app=angular.module('moduleA',['ionic']);
+		app.controller('indexA',['$scope',function($scope){
+
+		}])
+	</script>
+</html>

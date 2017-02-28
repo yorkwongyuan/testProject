@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title></title>
+	</head>
+
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css" />
+	
+
+	<body>
+		<div ng-controller="indexCtrl">
+			<ion-side-menus>
+				<ion-side-menu-content>
+					<ion-header-bar class="bar-header bar-balanced">
+					<h1 class="title">你好</h1>
+					</ion-header-bar>
+					
+					<ion-content>
+						<p>test</p>
+						<button ng-click="left()">123</button>
+							<button menu-toggle="left" class="button button-icon icon icon-navicon"></button>
+						<ion-refresher></ion-refresher>
+					</ion-content>
+				</ion-side-menu-content>
+
+				<!-- 左侧菜单 -->
+				<ion-side-menu side="left">
+					<ion-header-bar class="bar-header bar-balanced">
+						<h1 class="title">导航</h1>
+					</ion-header-bar>
+					<ion-content>
+						<a menu-close href="#/home" class="item">首页</a>
+						
+					</ion-content>
+				</ion-side-menu>
+
+				<!-- 右侧菜单 -->
+				<ion-side-menu side="right">
+					右
+				</ion-side-menu>				
+			</ion-side-menus>
+
+		</div>
+	</body>
+	<script>
+		//也是用angular的语法，定义一个主模块，引入ionic模块
+		var app = angular.module('ionicApp', ['ionic']);
+		app.controller('indexCtrl', ['$scope', '$timeout', '$http','$ionicSideMenuDelegate', function($scope, $timeout, $http,$ionicSideMenuDelegate) {
+			$scope.name = 'ionic';
+			$scope.title = '标题';
+			$scope.news = [];
+			$scope.left = function(){
+				$ionicSideMenuDelegate.toggleLeft();
+			}
+			$scope.getData = function() {
+				$http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id', {
+					params: {
+						channel_id: 6
+					}
+				}).success(function(data) {
+					console.log(data)
+					$scope.news = $scope.news.concat(data.news_list);
+					$scope.$broadcast('scroll.refreshComplete');
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				})
+			}
+		}])
+	</script>
+
+</html>

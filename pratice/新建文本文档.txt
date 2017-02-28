@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="moduleA">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/ionic.css">
+	<script src="../js/ionic.bundle.js"></script>
+</head>
+<body ng-controller="indexA">
+	<ion-header-bar align-title="left" class="bar-stable">
+		<button class="button icon-left ion-chevron-left button-clear button-dark">Back</button>
+		<h1 class="title">Title!</h1>
+		<button class="button button-light">button-light</button>
+	</ion-header-bar>
+
+	<ion-content padding="true">
+		<!-- 下拉刷新 -->
+		<ion-refresher pulling-text="shit" on-refresh="getData()" pulling-icon="ion-fork" refreshing-text="refreshing-text" refreshing-icon="ion-closed-captioning">
+		</ion-refresher>
+		
+		<div class="list card" ng-repeat="new in news">
+			<div class="item item-avatar">
+				<img ng-src="{{new.image}}" alt="">
+				<h2>{{new.title}}</h2>
+				<p>{{new.text}}</p>
+			</div>
+
+			<div class="item item-body">
+				<img class="full-image" style="height:20%;width:100%" ng-src="{{new.image}}" alt="">
+
+				<p>
+					{{new.text}}
+				</p>
+				<p>
+					<a href="#" class="subdued">1 喜欢</a>
+					<a href="#" class="subdued">
+						5 评论
+					</a>
+				</p>
+			</div>
+			<!-- item的意义是？ -->
+			<div class="item tabs tabs-secondary tabs-icon-left">
+				<a href="#" class="tab-item">
+					<i class="icon ion-thumbsup">喜欢</i>
+				</a>
+				<a href="#" class="tab-item">
+					<i class="icon ion-chatbox">评论</i>
+				</a>
+				<a class="tab-item" href="#">
+					<i class="icon ion-share">
+						分享
+					</i>
+				</a>
+			</div>
+		</div>
+		<!-- 滚动到底部时触发 -->
+		<ion-infinite-scroll icon="ion-checkmark-circled" on-infinite="getData()" distance="1%">
+			
+		</ion-infinite-scroll>
+		
+
+	</ion-content>
+</body>
+	<script>
+		var app=angular.module("moduleA",["ionic"]);
+		app.controller("indexA",["$scope","$http","$timeout",function($scope,$http,$timeout){
+			$scope.name='ionic';
+			$scope.title='标题';
+			$scope.news=[];
+			$scope.getData=function(){
+				$http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id',{params:{
+					channel_id:6
+				}}).success(function(data){
+					console.log(data);
+					$scope.news=$scope.news.concat(data.news_list);
+					$scope.$broadcast('scroll.refreshComplete');
+					$scope.$broadcast('scroll.infiniteScrollComplete')
+				})
+			}
+		}])
+	</script>
+</html>

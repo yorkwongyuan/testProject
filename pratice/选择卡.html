@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='moduleA'>
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css">
+</head>
+<body ng-controller='indexA'>
+	<ion-header-bar align-title="center">
+		<button class="button ion-chevron-left button-calm">back</button>
+	</ion-header-bar>
+
+	<ion-tabs>
+		<ion-tab title="首页" class="ion-home"></ion-tab>
+		<ion-tab title="首页" class=""></ion-tab>
+		<ion-tab title="首页"></ion-tab>
+	</ion-tabs>
+</body>
+	<script>
+		var app=angular.module("moduleA",['ionic']);
+		app.controller("indexA",["$scope",function($scope){
+
+		}])
+	</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="moduleA">
+<head>
+	<meta charset="UTF-8">
+	<title>下滚刷新</title>
+	<link rel="stylesheet" href="../css/ionic.css">
+	<script src='../js/ionic.bundle.js'></script>
+	<style>
+		body{
+			height:7000px;
+		}
+	</style>
+</head>
+<body ng-controller="indexA">
+	<ion-content>
+		<ion-infinite-scroll icon="ion-wineglass" on-infinite="show()" distance="1%">
+			
+		</ion-infinite-scroll>
+		{{name}}
+	</ion-content>
+</body>
+	<script>
+		var app=angular.module('moduleA',['ionic']);
+		app.controller('indexA',['$scope','$http',function($scope,$http){
+			$scope.arr=[];
+			$scope.show=function(){
+				$scope.name="york";
+				$scope.arr=$scope.arr.concat($scope.name);
+				$scope.name=$scope.arr;
+				$scope.$broadcast('scroll.infiniteScrollComplete')
+			}
+		}]);
+			
+	</script>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="moduleA">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/ionic.css">
+	<script src="../js/ionic.bundle.js"></script>
+	<script>
+		var app=angular.module('moduleA',['ionic']);
+		app.controller('indexA',['$scope','$http',function($scope,$http){
+			
+			$scope.show=function(){
+				$scope.name="搞笑"
+				$scope.$broadcast('scroll.refreshComplete')
+			};
+		}])
+	</script>
+</head>
+<body ng-controller="indexA">
+	<ion-content>
+		<ion-refresher pulling-text="zhazha" pulling-icon="ion-fork" refreshing-text="下拉刷新" refreshing-icon="ion-knife" on-refresh="show()">
+		</ion-refresher>
+			<div>{{name}}</div>
+	</ion-content>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title></title>
+	</head>
+	<!--ionic.bundle.js是集合了 ionic.js, angular.js, angular-animate.js,
+		angular-sanitize.js, angular-ui-router.js,
+		and ionic-angular.js-->
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css" />
+	<!--
+		1.引入ionic.bundle.js，css/ionic.css
+		2.定义一个主模块，引入模块名ionic
+	-->
+
+	<body>
+		<!--如果我们相中哪一个头部，直接复制粘贴-->
+		<div ng-controller="indexCtrl">
+			<ion-side-menus>
+				<!-- 中间内容 -->
+				<ion-side-menu-content>
+					<ion-header-bar class="bar bar-header bar-balanced">
+						<h1 class="title">你好</h1>
+					</ion-header-bar>
+					<ion-content>
+						<!--<div ui-view=""></div>-->
+						<ion-nav-view style="height:500px"></ion-nav-view>
+					</ion-content>
+				</ion-side-menu-content>
+
+				<!-- 左侧菜单 -->
+				<ion-side-menu side="left">
+					<ion-header-bar class="bar bar-header bar-balanced">
+						<h1 class="title">导航</h1>
+					</ion-header-bar>
+					<ion-content>
+						<a menu-close href="#/index" class="item">index</a>
+						<a menu-close href="#/home" class="item">home</a>
+					</ion-content>
+				</ion-side-menu>
+
+				<!-- 右侧菜单 -->
+				<ion-side-menu side="right">
+					右
+				</ion-side-menu>
+			</ion-side-menus>
+		</div>
+	</body>
+	<script>
+		//也是用angular的语法，定义一个主模块，引入ionic模块
+		var app = angular.module('ionicApp', ['ionic']);
+		app.config(['$stateProvider',function($stateProvider){
+			$stateProvider.state('index',{
+				url:'/index',
+				template:'<ion-view>index<a href="#/home">homeasdasdasd</a></ion-view>'
+			}).state('home',{
+				url:'/home',
+				template:'<ion-view>home<a href="#/index">indexasdasdasd</a></ion-view>'
+			})
+		}])
+		app.controller('indexCtrl', ['$scope', '$timeout', '$http','$ionicSideMenuDelegate', function($scope, $timeout, $http,$ionicSideMenuDelegate) {
+			// $scope.left = function(){
+			// 	$ionicSideMenuDelegate.toggleLeft();
+			// }
+		}])
+	</script>
+
+</html>

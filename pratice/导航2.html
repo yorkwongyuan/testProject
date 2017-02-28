@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="moduleA">
+<head>
+	<meta charset="UTF-8">
+	<title>导航2</title>
+	<script src="../js/ionic.bundle.js"></script>
+	<link rel="stylesheet" href="../css/ionic.css">
+</head>
+<body ng-controller="indexA">
+	<ion-side-menus>
+			<!-- 中间顶部 -->
+		<ion-side-menu-content>
+			<ion-header-bar class="bar bar-header bar-balanced">
+			<h1 class="title">你好</h1>				
+			</ion-header-bar>
+			<!-- 中间内容部分 -->
+			<ion-content>
+				<ion-nav-view style="height:500px">
+					
+				</ion-nav-view>
+			</ion-content>
+		</ion-side-menu-content>
+			<!-- 左侧菜单 -->
+			<ion-side-menu side="left">
+				<ion-header-bar class="bar bar-header bar-balanced">
+					<h1 class="title">导航</h1>
+				</ion-header-bar>
+
+				<ion-content>
+					<a menu-close href="#/index" class="item">index</a>
+					<a menu-close href="#/home" class="item">home</a>
+				</ion-content>
+			</ion-side-menu>
+			<!-- 右侧菜单 -->
+			<ion-side-menu side="right">
+				右
+			</ion-side-menu>
+
+
+	</ion-side-menus>
+	
+</body>
+	<script>
+		var app=angular.module("moduleA",['ionic']);
+		app.controller('indexA',["$scope","$http","$ionicSideMenuDelegate",function($scope,$http,$ionicSideMenuDelegate){
+			// $scope.left=function(){
+			// 	$ionicSideMenuDelegate.toggleLeft()
+				
+			// };
+			app.config(['$stateProvider',function($stateProvider){
+				$stateProvider.state('index',{
+					url:'/index',
+					template:'<ion-view>home<a href="#/home">home</a></ion-view>'
+				}).state('home',{
+					url:'/home',
+					template:'<ion-view>index<a href="#/index">index</a></ion-view>'
+				})
+			}])
+			// $scope.getData=function(){
+			// 	$http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id',{
+			// 		params:{
+			// 			channel_id:6
+			// 		}
+			// 	}).success(function(data){
+			// 		$scope.news=$scope.news.concat(data.news_list);
+			// 		$scope.$broadcast('scroll.refreshComplete');
+			// 		$scope.$broadcast('scroll.infiniteScrollComplete')
+			// 	})
+			// }
+		}])
+	</script>
+</html>
